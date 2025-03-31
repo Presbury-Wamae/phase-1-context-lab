@@ -20,4 +20,36 @@ const allWagesFor = function () {
 
     return payable
 }
+// payroll.js
+
+class Payroll {
+    constructor() {
+        this.employees = [];
+    }
+
+    addEmployee(employee) {
+        this.employees.push(employee);
+    }
+
+    calculatePay(employeeId) {
+        const employee = this.employees.find(emp => emp.id === employeeId);
+        if (!employee) throw new Error("Employee not found");
+        
+        return employee.hourlyRate * employee.hoursWorked;
+    }
+
+    totalPayroll() {
+        return this.employees.reduce((total, emp) => total + (emp.hourlyRate * emp.hoursWorked), 0);
+    }
+
+    generatePayslip(employeeId) {
+        const employee = this.employees.find(emp => emp.id === employeeId);
+        if (!employee) throw new Error("Employee not found");
+        
+        return `Payslip for ${employee.name}: \nHours Worked: ${employee.hoursWorked}\nHourly Rate: $${employee.hourlyRate}\nTotal Pay: $${this.calculatePay(employeeId)}`;
+    }
+}
+
+module.exports = Payroll;
+
 
